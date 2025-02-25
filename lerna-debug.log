@@ -1,0 +1,126 @@
+0 silly argv {
+0 silly argv   _: [ 'version' ],
+0 silly argv   yes: true,
+0 silly argv   y: true,
+0 silly argv   lernaVersion: '8.2.0',
+0 silly argv   '$0': 'C:\\Program Files\\nodejs\\node_modules\\lerna\\dist\\cli.js',
+0 silly argv   bump: 'patch'
+0 silly argv }
+1 notice cli v8.2.0
+2 verbose packageConfigs Package manager "pnpm" detected. Resolving packages using `pnpm-workspace.yaml`.
+3 verbose rootPath D:\a\yuanmeng\zhgit
+4 info current version 1.0.3
+5 silly isAnythingCommitted
+6 verbose isAnythingCommitted 1
+7 silly getCurrentBranch
+8 verbose currentBranch main
+9 silly remoteBranchExists
+10 silly isBehindUpstream
+11 silly isBehindUpstream main is behind origin/main by 0 commit(s) and ahead by 2
+12 silly hasTags
+13 verbose hasTags true
+14 silly git-describe.sync "v1.0.2-2-g2377ff4" => {"lastTagName":"v1.0.2","lastVersion":"v1.0.2","refCount":"2","sha":"2377ff4","isDirty":false}
+15 info Looking for changed packages since v1.0.2
+16 silly checking diff packages/cli
+17 silly found diff in packages/cli/dist/index.js
+17 silly found diff in packages/cli/dist/multipart-parser-BpUW4k5w.js
+17 silly found diff in packages/cli/rollup.config.js
+18 verbose filtered diff [
+18 verbose filtered diff   'packages/cli/dist/index.js',
+18 verbose filtered diff   'packages/cli/dist/multipart-parser-BpUW4k5w.js',
+18 verbose filtered diff   'packages/cli/rollup.config.js'
+18 verbose filtered diff ]
+19 silly checking diff packages/command
+20 silly found diff in packages/command/dist/index.js
+20 silly found diff in packages/command/package.json
+20 silly found diff in packages/command/rollup.config.js
+21 verbose filtered diff [
+21 verbose filtered diff   'packages/command/dist/index.js',
+21 verbose filtered diff   'packages/command/package.json',
+21 verbose filtered diff   'packages/command/rollup.config.js'
+21 verbose filtered diff ]
+22 silly checking diff packages/config
+23 silly found diff in packages/config/dist/index-C357pEfd.js
+23 silly found diff in packages/config/dist/index.js
+23 silly found diff in packages/config/dist/multipart-parser-DW8E8atY.js
+23 silly found diff in packages/config/package.json
+23 silly found diff in packages/config/rollup.config.js
+24 verbose filtered diff [
+24 verbose filtered diff   'packages/config/dist/index-C357pEfd.js',
+24 verbose filtered diff   'packages/config/dist/index.js',
+24 verbose filtered diff   'packages/config/dist/multipart-parser-DW8E8atY.js',
+24 verbose filtered diff   'packages/config/package.json',
+24 verbose filtered diff   'packages/config/rollup.config.js'
+24 verbose filtered diff ]
+25 silly checking diff packages/push
+26 silly found diff in packages/push/dist/index-C3IXydli.js
+26 silly found diff in packages/push/dist/index.js
+26 silly found diff in packages/push/dist/multipart-parser-BTjuoZFm.js
+26 silly found diff in packages/push/package.json
+26 silly found diff in packages/push/rollup.config.js
+27 verbose filtered diff [
+27 verbose filtered diff   'packages/push/dist/index-C3IXydli.js',
+27 verbose filtered diff   'packages/push/dist/index.js',
+27 verbose filtered diff   'packages/push/dist/multipart-parser-BTjuoZFm.js',
+27 verbose filtered diff   'packages/push/package.json',
+27 verbose filtered diff   'packages/push/rollup.config.js'
+27 verbose filtered diff ]
+28 silly checking diff packages/utils
+29 silly found diff in packages/utils/dist/index-36osDwzl.js
+29 silly found diff in packages/utils/dist/index.js
+29 silly found diff in packages/utils/dist/multipart-parser-B9p_CSYe.js
+29 silly found diff in packages/utils/package.json
+29 silly found diff in packages/utils/rollup.config.js
+30 verbose filtered diff [
+30 verbose filtered diff   'packages/utils/dist/index-36osDwzl.js',
+30 verbose filtered diff   'packages/utils/dist/index.js',
+30 verbose filtered diff   'packages/utils/dist/multipart-parser-B9p_CSYe.js',
+30 verbose filtered diff   'packages/utils/package.json',
+30 verbose filtered diff   'packages/utils/rollup.config.js'
+30 verbose filtered diff ]
+31 verbose updated @zhihaoo/cli
+32 verbose updated @zhihaoo/command
+33 verbose updated @zhihaoo/config
+34 verbose updated @zhihaoo/push
+35 verbose updated @zhihaoo/utils
+36 verbose git-describe undefined => "v1.0.2-2-g2377ff4"
+37 silly git-describe parsed => {"lastTagName":"v1.0.2","lastVersion":"v1.0.2","refCount":"2","sha":"2377ff4","isDirty":false}
+38 info auto-confirmed
+39 info execute Skipping releases
+40 silly lifecycle No script for "preversion" in "zhgit", continuing
+41 silly lifecycle No script for "preversion" in "@zhihaoo/command", continuing
+42 silly lifecycle No script for "preversion" in "@zhihaoo/config", continuing
+43 silly lifecycle No script for "preversion" in "@zhihaoo/utils", continuing
+44 verbose version @zhihaoo/command has no lockfile. Skipping lockfile update.
+45 verbose version @zhihaoo/config has no lockfile. Skipping lockfile update.
+46 verbose version @zhihaoo/utils has no lockfile. Skipping lockfile update.
+47 silly lifecycle No script for "version" in "@zhihaoo/config", continuing
+48 silly lifecycle No script for "version" in "@zhihaoo/command", continuing
+49 silly lifecycle No script for "version" in "@zhihaoo/utils", continuing
+50 silly lifecycle No script for "preversion" in "@zhihaoo/push", continuing
+51 verbose version @zhihaoo/push has no lockfile. Skipping lockfile update.
+52 silly lifecycle No script for "version" in "@zhihaoo/push", continuing
+53 silly lifecycle No script for "preversion" in "@zhihaoo/cli", continuing
+54 verbose version @zhihaoo/cli has no lockfile. Skipping lockfile update.
+55 silly lifecycle No script for "version" in "@zhihaoo/cli", continuing
+56 silly lifecycle No script for "version" in "zhgit", continuing
+57 verbose version Updating root pnpm-lock.yaml
+58 error Error: Command failed with exit code 1: pnpm install --lockfile-only --ignore-scripts
+58 error Scope: all 6 workspace projects
+58 error  WARN  `node_modules` is present. Lockfile only installation will make it out-of-date
+58 error Progress: resolved 1, reused 0, downloaded 0, added 0
+58 error packages/command                         |  WARN  deprecated rollup-plugin-babel@4.4.0
+58 error D:\a\yuanmeng\zhgit\packages\config:
+58 error  ERR_PNPM_NO_MATCHING_VERSION  No matching version found for @zhihaoo/command@^1.0.3
+58 error
+58 error This error happened while installing a direct dependency of D:\a\yuanmeng\zhgit\packages\config
+58 error
+58 error The latest release of @zhihaoo/command is "1.0.0".
+58 error
+58 error If you need the full list of all 1 published versions run "$ pnpm view @zhihaoo/command versions".
+58 error Progress: resolved 21, reused 0, downloaded 0, added 0
+58 error     at makeError (D:\a\yuanmeng\zhgit\node_modules\.pnpm\execa@5.0.0\node_modules\execa\lib\error.js:59:11)
+58 error     at handlePromise (D:\a\yuanmeng\zhgit\node_modules\.pnpm\execa@5.0.0\node_modules\execa\index.js:114:26)
+58 error     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+58 error     at async VersionCommand.updatePackageVersions (D:\a\yuanmeng\zhgit\node_modules\.pnpm\lerna@8.2.0_encoding@0.1.13\node_modules\lerna\dist\index.js:9868:11)
+58 error     at async Promise.all (index 0)
