@@ -8,8 +8,8 @@
   "type": "module",
   "dependencies": {
     "@octokit/rest": "^21.1.1",
-    "@zhihaoo/command": "^1.0.4",
-    "@zhihaoo/utils": "^1.0.4",
+    "@zhihaoo/command": "workspace:*",
+    "@zhihaoo/utils": "workspace:*",
     "dayjs": "^1.11.13",
     "node-fetch": "^3.3.2",
     "ora": "^8.2.0"

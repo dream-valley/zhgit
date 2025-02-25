@@ -6,8 +6,8 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "dependencies": {
-    "@zhihaoo/command": "^1.0.3",
-    "@zhihaoo/utils": "^1.0.3",
+    "@zhihaoo/command": "workspace:*",
+    "@zhihaoo/utils": "workspace:*",
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
