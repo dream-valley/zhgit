@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "zhgit push 命令",
   "homepage": "",
-  "license": "ISC",
   "main": "src/index.js",
   "dependencies": {
     "@octokit/rest": "^21.1.1",
@@ -24,5 +23,6 @@
   },
   "scripts": {},
   "type": "module",
-  "gitHead": "8167c05fc778ece536b2a0e36f6f453ffa2908d3"
+  "license": "ISC",
+  "gitHead": "f3de08a6bb2c86812bfe58aee31925b1078565db"
 }

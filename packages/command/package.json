@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "cli 命令",
   "homepage": "",
-  "license": "ISC",
   "main": "src/index.js",
   "directories": {
     "src": "src",
@@ -19,5 +18,6 @@
   "scripts": {
     "test": "node ./__tests__/command.test.js"
   },
-  "gitHead": "8167c05fc778ece536b2a0e36f6f453ffa2908d3"
+  "license": "ISC",
+  "gitHead": "f3de08a6bb2c86812bfe58aee31925b1078565db"
 }

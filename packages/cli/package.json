@@ -38,5 +38,6 @@
     "rollup-plugin-add-shebang": "^0.3.1",
     "rollup-plugin-babel": "^4.4.0"
   },
-  "gitHead": "8167c05fc778ece536b2a0e36f6f453ffa2908d3"
+  "license": "ISC",
+  "gitHead": "f3de08a6bb2c86812bfe58aee31925b1078565db"
 }
