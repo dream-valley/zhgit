@@ -1,6 +1,6 @@
 {
   "name": "@zhihaoo/cli",
-  "version": "1.0.4",
+  "version": "1.0.3",
   "main": "dist/index.js",
   "bin": {
     "zhgit": "dist/index.js"

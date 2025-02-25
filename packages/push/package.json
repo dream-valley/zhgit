@@ -1,6 +1,6 @@
 {
   "name": "@zhihaoo/push",
-  "version": "1.0.4",
+  "version": "1.0.1",
   "description": "zhgit push 命令",
   "homepage": "",
   "main": "dist/index.js",

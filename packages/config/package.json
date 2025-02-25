@@ -1,6 +1,6 @@
 {
   "name": "@zhihaoo/config",
-  "version": "1.0.4",
+  "version": "1.0.1",
   "description": "zhgit config 命令, 设置 github 的密钥",
   "homepage": "",
   "main": "dist/index.js",

@@ -1,6 +1,6 @@
 {
   "name": "@zhihaoo/command",
-  "version": "1.0.4",
+  "version": "1.0.1",
   "description": "cli 命令",
   "homepage": "",
   "main": "dist/index.js",
