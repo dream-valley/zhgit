@@ -14,9 +14,9 @@
     "build": "npx rimraf n dist && npx rollup -c rollup.config.js"
   },
   "dependencies": {
-    "@zhihaoo/config": "1.0.0",
-    "@zhihaoo/push": "1.0.0",
-    "@zhihaoo/utils": "1.0.0",
+    "@zhihaoo/config": "^1.0.0",
+    "@zhihaoo/push": "^1.0.0",
+    "@zhihaoo/utils": "^1.0.0",
     "commander": "^13.1.0",
     "dirname-filename-esm": "^1.1.2",
     "fs-extra": "^11.3.0",

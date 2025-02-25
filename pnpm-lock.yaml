@@ -15,13 +15,13 @@ importers:
   packages/cli:
     dependencies:
       '@zhihaoo/config':
-        specifier: 1.0.0
+        specifier: ^1.0.0
         version: 1.0.0
       '@zhihaoo/push':
-        specifier: 1.0.0
+        specifier: ^1.0.0
         version: 1.0.0
       '@zhihaoo/utils':
-        specifier: 1.0.0
+        specifier: ^1.0.0
         version: 1.0.0
       commander:
         specifier: ^13.1.0
@@ -75,10 +75,10 @@ importers:
   packages/config:
     dependencies:
       '@zhihaoo/command':
-        specifier: 1.0.0
+        specifier: ^1.0.0
         version: 1.0.0
       '@zhihaoo/utils':
-        specifier: 1.0.0
+        specifier: ^1.0.0
         version: 1.0.0
       node-fetch:
         specifier: ^3.3.2
@@ -90,10 +90,10 @@ importers:
         specifier: ^21.1.1
         version: 21.1.1
       '@zhihaoo/command':
-        specifier: 1.0.0
+        specifier: ^1.0.0
         version: 1.0.0
       '@zhihaoo/utils':
-        specifier: 1.0.0
+        specifier: ^1.0.0
         version: 1.0.0
       dayjs:
         specifier: ^1.11.13

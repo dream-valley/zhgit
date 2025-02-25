@@ -6,8 +6,8 @@
   "main": "src/index.js",
   "module": "src/index.js",
   "dependencies": {
-    "@zhihaoo/command": "1.0.0",
-    "@zhihaoo/utils": "1.0.0",
+    "@zhihaoo/command": "^1.0.0",
+    "@zhihaoo/utils": "^1.0.0",
     "node-fetch": "^3.3.2"
   },
   "type": "module",
