@@ -22,7 +22,9 @@
     "fse": "^4.0.1",
     "semver": "^7.7.1"
   },
-  "access": "public",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "devDependencies": {
     "@babel/core": "^7.26.9",
@@ -36,5 +38,5 @@
     "rollup-plugin-add-shebang": "^0.3.1",
     "rollup-plugin-babel": "^4.4.0"
   },
-  "gitHead": "374269db7af767e32db05d302a557c4b2dec3ccc"
+  "gitHead": "8167c05fc778ece536b2a0e36f6f453ffa2908d3"
 }

@@ -11,6 +11,8 @@
     "node-fetch": "^3.3.2"
   },
   "type": "module",
-  "access": "public",
-  "gitHead": "374269db7af767e32db05d302a557c4b2dec3ccc"
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "8167c05fc778ece536b2a0e36f6f453ffa2908d3"
 }

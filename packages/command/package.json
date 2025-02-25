@@ -13,9 +13,11 @@
   "files": [
     "src"
   ],
-  "access": "public",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "node ./__tests__/command.test.js"
   },
-  "gitHead": "374269db7af767e32db05d302a557c4b2dec3ccc"
+  "gitHead": "8167c05fc778ece536b2a0e36f6f453ffa2908d3"
 }
