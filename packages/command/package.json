@@ -4,11 +4,12 @@
   "description": "cli 命令",
   "homepage": "",
   "main": "src/index.js",
+  "module": "src/index.js",
+  "type": "module",
   "directories": {
     "src": "src",
     "test": "__tests__"
   },
-  "type": "module",
   "files": [
     "src"
   ],

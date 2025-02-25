@@ -4,11 +4,13 @@
   "description": "zhgit config 命令, 设置 github 的密钥",
   "homepage": "",
   "main": "src/index.js",
+  "module": "src/index.js",
   "dependencies": {
     "@zhihaoo/command": "1.0.0",
     "@zhihaoo/utils": "1.0.0",
     "node-fetch": "^3.3.2"
   },
+  "type": "module",
   "directories": {
     "src": "src"
   },
@@ -19,7 +21,6 @@
     "access": "public"
   },
   "scripts": {},
-  "type": "module",
   "license": "ISC",
   "gitHead": "8b165f062e9aad0df287fb9f38467f6fd964bfd2"
 }

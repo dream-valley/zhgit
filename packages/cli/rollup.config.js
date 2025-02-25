@@ -36,4 +36,6 @@ export default {
     terser(), // 可选：压缩代码
     json(),
   ],
+
+  external: ["@zhihaoo/config", "@zhihaoo/push", "@zhihaoo/utils"],
 };

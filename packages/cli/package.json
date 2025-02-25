@@ -5,6 +5,7 @@
   "bin": {
     "zhgit": "dist/index.js"
   },
+  "type": "module",
   "files": [
     "dist",
     "README.md"
@@ -25,7 +26,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "type": "module",
   "devDependencies": {
     "@babel/core": "^7.26.9",
     "@babel/preset-env": "^7.26.9",

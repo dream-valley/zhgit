@@ -4,6 +4,8 @@
   "description": "zhgit push 命令",
   "homepage": "",
   "main": "src/index.js",
+  "module": "src/index.js",
+  "type": "module",
   "dependencies": {
     "@octokit/rest": "^21.1.1",
     "@zhihaoo/command": "1.0.0",
@@ -22,7 +24,6 @@
     "access": "public"
   },
   "scripts": {},
-  "type": "module",
   "license": "ISC",
   "gitHead": "8b165f062e9aad0df287fb9f38467f6fd964bfd2"
 }
