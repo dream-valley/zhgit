@@ -1,0 +1,15 @@
+{
+  "name": "@zh/utils",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "node src/index.js"
+  },
+  "dependencies": {
+    "@octokit/rest": "^21.1.1",
+    "chalk": "^4.1.2",
+    "node-fetch": "^3.3.2"
+  },
+  "type": "module",
+  "gitHead": "0816480c4b3e8a5acdd7168ec4b6faacbfeb7d0a"
+}

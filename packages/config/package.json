@@ -1,0 +1,22 @@
+{
+  "name": "@zh/config",
+  "version": "1.0.0",
+  "description": "zhgit config 命令, 设置 github 的密钥",
+  "homepage": "",
+  "license": "ISC",
+  "main": "src/index.js",
+  "dependencies": {
+    "@zh/command": "1.0.0",
+    "@zh/utils": "1.0.0",
+    "node-fetch": "^3.3.2"
+  },
+  "directories": {
+    "src": "src"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {},
+  "type": "module",
+  "gitHead": "0816480c4b3e8a5acdd7168ec4b6faacbfeb7d0a"
+}

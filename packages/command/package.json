@@ -1,0 +1,20 @@
+{
+  "name": "@zh/command",
+  "version": "1.0.0",
+  "description": "cli 命令",
+  "homepage": "",
+  "license": "ISC",
+  "main": "src/index.js",
+  "directories": {
+    "src": "src",
+    "test": "__tests__"
+  },
+  "type": "module",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "node ./__tests__/command.test.js"
+  },
+  "gitHead": "0816480c4b3e8a5acdd7168ec4b6faacbfeb7d0a"
+}
