@@ -19,7 +19,8 @@
   "files": [
     "src"
   ],
+  "access": "public",
   "scripts": {},
   "type": "module",
-  "gitHead": "0816480c4b3e8a5acdd7168ec4b6faacbfeb7d0a"
+  "gitHead": "51932b659a8b8d9cf09ca460359a84f8dc63db47"
 }
