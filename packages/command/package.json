@@ -3,21 +3,32 @@
   "version": "1.0.0",
   "description": "cli 命令",
   "homepage": "",
-  "main": "src/index.js",
-  "module": "src/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "type": "module",
   "directories": {
-    "src": "src",
-    "test": "__tests__"
+    "src": "dist"
   },
   "files": [
-    "src"
+    "dist"
   ],
   "publishConfig": {
     "access": "public"
   },
+  "devDependencies": {
+    "@babel/core": "^7.26.9",
+    "@babel/preset-env": "^7.26.9",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.34.8",
+    "rollup-plugin-add-shebang": "^0.3.1",
+    "rollup-plugin-babel": "^4.4.0"
+  },
   "scripts": {
-    "test": "node ./__tests__/command.test.js"
+    "build": "npx rimraf n dist && npx rollup -c rollup.config.js"
   },
   "license": "ISC",
   "gitHead": "8b165f062e9aad0df287fb9f38467f6fd964bfd2"

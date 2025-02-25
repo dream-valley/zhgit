@@ -4,10 +4,9 @@ import commonjs from "@rollup/plugin-commonjs";
 import babel from "@rollup/plugin-babel";
 import terser from "@rollup/plugin-terser";
 import json from "@rollup/plugin-json";
-import shebang from "rollup-plugin-add-shebang";
 
 export default {
-  input: "bin/cli.js",
+  input: "src/index.js",
   output: {
     dir: "dist",
     entryFileNames: "index.js",
@@ -15,8 +14,8 @@ export default {
     preserveModules: false,
   },
   plugins: [
-    shebang("#!/usr/bin/env node"),
     nodeResolve({
+      // 解析内部模块的关键配置
       preferBuiltins: false, // 禁用自动转换内置模块（除非必要）
     }),
     commonjs({
