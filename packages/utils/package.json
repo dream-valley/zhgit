@@ -1,5 +1,5 @@
 {
-  "name": "@zh/utils",
+  "name": "@zhihaoo/utils",
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
@@ -15,5 +15,5 @@
     "access": "public"
   },
   "license": "ISC",
-  "gitHead": "f3de08a6bb2c86812bfe58aee31925b1078565db"
+  "gitHead": "8b165f062e9aad0df287fb9f38467f6fd964bfd2"
 }

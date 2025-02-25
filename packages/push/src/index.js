@@ -1,6 +1,6 @@
-import Command from "@zh/command";
+import Command from "@zhihaoo/command";
 import { execSync } from "child_process";
-import { ConfigManager, Logger } from "@zh/utils";
+import { ConfigManager, Logger } from "@zhihaoo/utils";
 import ora from "ora";
 import dayjs from "dayjs";
 import { Octokit } from "@octokit/rest";

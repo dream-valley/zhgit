@@ -1,5 +1,5 @@
-import createPushCommand from "@zh/push";
-import createConfigCommand from "@zh/config";
+import createPushCommand from "@zhihaoo/push";
+import createConfigCommand from "@zhihaoo/config";
 import createCLI from "./createCLI.js";
 
 export default function (args) {

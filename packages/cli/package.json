@@ -1,5 +1,5 @@
 {
-  "name": "@zh/cli",
+  "name": "@zhihaoo/cli",
   "version": "1.0.0",
   "main": "dist/index.js",
   "bin": {
@@ -13,9 +13,9 @@
     "build": "npx rimraf n dist && npx rollup -c rollup.config.js"
   },
   "dependencies": {
-    "@zh/config": "1.0.0",
-    "@zh/push": "1.0.0",
-    "@zh/utils": "1.0.0",
+    "@zhihaoo/config": "1.0.0",
+    "@zhihaoo/push": "1.0.0",
+    "@zhihaoo/utils": "1.0.0",
     "commander": "^13.1.0",
     "dirname-filename-esm": "^1.1.2",
     "fs-extra": "^11.3.0",
@@ -39,5 +39,5 @@
     "rollup-plugin-babel": "^4.4.0"
   },
   "license": "ISC",
-  "gitHead": "f3de08a6bb2c86812bfe58aee31925b1078565db"
+  "gitHead": "8b165f062e9aad0df287fb9f38467f6fd964bfd2"
 }

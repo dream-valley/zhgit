@@ -1,5 +1,5 @@
-import Command from "@zh/command";
-import { ConfigManager, Logger } from "@zh/utils";
+import Command from "@zhihaoo/command";
+import { ConfigManager, Logger } from "@zhihaoo/utils";
 import { execSync } from "child_process";
 
 class ConfigCommand extends Command {

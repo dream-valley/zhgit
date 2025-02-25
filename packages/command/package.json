@@ -1,5 +1,5 @@
 {
-  "name": "@zh/command",
+  "name": "@zhihaoo/command",
   "version": "1.0.0",
   "description": "cli 命令",
   "homepage": "",
@@ -19,5 +19,5 @@
     "test": "node ./__tests__/command.test.js"
   },
   "license": "ISC",
-  "gitHead": "f3de08a6bb2c86812bfe58aee31925b1078565db"
+  "gitHead": "8b165f062e9aad0df287fb9f38467f6fd964bfd2"
 }

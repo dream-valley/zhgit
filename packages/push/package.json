@@ -1,13 +1,13 @@
 {
-  "name": "@zh/push",
+  "name": "@zhihaoo/push",
   "version": "1.0.0",
   "description": "zhgit push 命令",
   "homepage": "",
   "main": "src/index.js",
   "dependencies": {
     "@octokit/rest": "^21.1.1",
-    "@zh/command": "1.0.0",
-    "@zh/utils": "1.0.0",
+    "@zhihaoo/command": "1.0.0",
+    "@zhihaoo/utils": "1.0.0",
     "dayjs": "^1.11.13",
     "node-fetch": "^3.3.2",
     "ora": "^8.2.0"
@@ -24,5 +24,5 @@
   "scripts": {},
   "type": "module",
   "license": "ISC",
-  "gitHead": "f3de08a6bb2c86812bfe58aee31925b1078565db"
+  "gitHead": "8b165f062e9aad0df287fb9f38467f6fd964bfd2"
 }
