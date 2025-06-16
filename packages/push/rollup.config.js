@@ -13,10 +13,28 @@ export default {
     format: "esm",
     preserveModules: false,
   },
+  external: [
+    // 原生模块和 Node.js 内置模块
+    "keytar",
+    "os",
+    "path",
+    "fs",
+    "child_process",
+    "node:http",
+    "node:https",
+    "node:zlib",
+    "node:stream",
+    "node:buffer",
+    "node:util",
+    "node:url",
+    "node:net",
+    "node:fs",
+    "node:path",
+  ],
   plugins: [
     nodeResolve({
       // 解析内部模块的关键配置
-      preferBuiltins: false, // 禁用自动转换内置模块（除非必要）
+      preferBuiltins: true, // 优先使用内置模块
     }),
     commonjs({
       namedExports: {

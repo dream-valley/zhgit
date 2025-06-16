@@ -1,14 +1,16 @@
 {
-  "name": "@zhihaoo/utils",
-  "version": "1.0.1",
-  "main": "src/index.js",
-  "module": "src/index.js",
+  "name": "@zhihaoo/branch",
+  "version": "1.0.0",
+  "description": "zhgit branch 命令，智能分支管理",
+  "homepage": "",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "type": "module",
   "dependencies": {
-    "@octokit/rest": "^21.1.1",
-    "chalk": "^4.1.2",
-    "node-fetch": "^3.3.2",
-    "keytar": "^7.9.0"
+    "@zhihaoo/command": "workspace:*",
+    "@zhihaoo/utils": "workspace:*",
+    "ora": "^8.2.0",
+    "dayjs": "^1.11.13"
   },
   "devDependencies": {
     "@babel/core": "^7.26.9",
@@ -25,9 +27,14 @@
   "scripts": {
     "build": "npx rimraf n dist && npx rollup -c rollup.config.js"
   },
+  "directories": {
+    "src": "dist"
+  },
+  "files": [
+    "dist"
+  ],
   "publishConfig": {
     "access": "public"
   },
-  "license": "ISC",
-  "gitHead": "8b165f062e9aad0df287fb9f38467f6fd964bfd2"
+  "license": "ISC"
 }

@@ -14,6 +14,7 @@
     "build": "npx rimraf n dist && npx rollup -c rollup.config.js"
   },
   "dependencies": {
+    "@zhihaoo/branch": "workspace:*",
     "@zhihaoo/config": "workspace:*",
     "@zhihaoo/push": "workspace:*",
     "@zhihaoo/utils": "workspace:*",
@@ -21,7 +22,8 @@
     "dirname-filename-esm": "^1.1.2",
     "fs-extra": "^11.3.0",
     "fse": "^4.0.1",
-    "semver": "^7.7.1"
+    "semver": "^7.7.1",
+    "keytar": "^7.9.0"
   },
   "publishConfig": {
     "access": "public"

@@ -1,6 +1,16 @@
 import Command from "@zhihaoo/command";
-import { execSync } from "child_process";
-import { ConfigManager, Logger } from "@zhihaoo/utils";
+import {
+  ConfigManager,
+  Logger,
+  GitUtils,
+  ErrorHandler,
+  ZhgitError,
+  ERROR_CODES,
+  safeExecute,
+  withRetry,
+  shouldRetryNetworkError,
+  CommitAnalyzer,
+} from "@zhihaoo/utils";
 import ora from "ora";
 import dayjs from "dayjs";
 import { Octokit } from "@octokit/rest";
@@ -48,154 +58,281 @@ class PushCommand extends Command {
     return "推送代码到 branch_name 分支";
   }
 
-  preAction() {
-    if (!ConfigManager.existedToken()) throw "请先设置 github token";
+  async preAction() {
+    try {
+      // 检查是否在 Git 仓库中
+      if (!GitUtils.isGitRepository()) {
+        throw new ZhgitError(
+          "当前目录不是 Git 仓库，请在 Git 仓库中执行此命令",
+          ERROR_CODES.GIT_NOT_REPOSITORY
+        );
+      }
 
-    if (!this.token || !this.octokit) {
-      this.token = ConfigManager.getToken();
-      this.octokit = new Octokit({
-        auth: this.token,
-        request: {
-          fetch: fetch,
-        },
-      });
+      // 检查是否有 Token
+      if (!ConfigManager.existedToken()) {
+        throw new ZhgitError(
+          "请先设置 GitHub Token: zhgit config <your-token>",
+          ERROR_CODES.AUTH_TOKEN_MISSING
+        );
+      }
+
+      // 获取并验证 Token
+      if (!this.token || !this.octokit) {
+        this.token = await ConfigManager.getToken();
+        this.octokit = new Octokit({
+          auth: this.token,
+          request: {
+            fetch: fetch,
+            timeout: 30000, // 30秒超时
+          },
+        });
+      }
+    } catch (error) {
+      const zhgitError = ErrorHandler.handle(error, "preAction");
+      ErrorHandler.displayError(zhgitError);
+      throw zhgitError;
     }
   }
 
   /**
-   * branch 是目标分支
-   * @param {*} param0
+   * 推送代码到目标分支
+   * @param {Array} params - [branch, opts]
    */
   async action([branch, opts]) {
-    const validBranch = ["dev", "release", "main"];
-
-    if (!validBranch.includes(branch)) {
-      Logger.error(`目标分支仅支持 ${validBranch.join(", ")}`);
-      return;
-    }
-
-    const username = execSync("git config --global user.name")
-      .toString()
-      .trim();
-
-    const currentBranch = execSync("git rev-parse --abbrev-ref HEAD")
-      .toString()
-      .trim();
-
-    const isMergeBranch = currentBranch.includes(`-to-${branch}-`);
-
-    let newBranch = currentBranch;
-    if (!isMergeBranch) {
-      // 创建新的分支
-
-      spinner.start(`创建新分支...`);
-      newBranch = `${username}-push-${currentBranch}-to-${branch}-${dayjs().format(
-        "YYYYMMDDHHmmss"
-      )}`;
-      spinner.succeed(`新分支创建成功: ${newBranch}`);
-
-      // 切换到新分支
-      spinner.start(`切换到新分支...`);
-      execSync(`git checkout -b ${newBranch}`);
-      spinner.succeed(`切换到新分支: ${newBranch}`);
-
-      try {
-        spinner.start(`正在拉取 ${branch} 分支最新代码...`);
-        execSync(`git fetch origin ${branch}`);
-        spinner.succeed("拉取成功");
-      } catch (e) {
-        spinner.fail("拉取失败");
-        throw e;
-      }
-
-      // 合并分支
-      try {
-        spinner.start(`正在合并 ${branch} 代码`);
-        execSync(`git merge origin/${branch}`);
-        spinner.succeed(`合并成功`);
-      } catch (error) {
-        spinner.fail(`合并失败, ${error}`);
-        Logger.info("合并有冲突, 请先解决冲突, 然后:");
-        Logger.info("1. git add .");
-        Logger.info('2. git commit -m "resolve conflicts"');
-        Logger.info(`3. zhgit push origin ${newBranch}  (注意: 提交用 zhgit)`);
-        process.exit(1);
-      }
-    }
-
-    // 推送到远程分支
     try {
-      spinner.start(`正在推送到 github ...`);
-      execSync(`git push origin ${newBranch}`);
-      spinner.succeed(`推送完成`);
+      await safeExecute(async () => {
+        // 验证目标分支
+        const validBranch = ["dev", "release", "main"];
+        if (!validBranch.includes(branch)) {
+          throw new ZhgitError(
+            `目标分支仅支持 ${validBranch.join(", ")}`,
+            ERROR_CODES.INVALID_INPUT
+          );
+        }
+
+        // 检查工作区状态
+        if (!GitUtils.isWorkingDirectoryClean()) {
+          throw new ZhgitError(
+            "工作区有未提交的更改，请先提交或暂存更改",
+            ERROR_CODES.GIT_DIRTY_WORKING_DIR
+          );
+        }
+
+        // 获取用户信息和当前分支
+        const username = GitUtils.getUsername();
+        const currentBranch = GitUtils.getCurrentBranch();
+
+        Logger.info(`当前分支: ${currentBranch}`);
+        Logger.info(`目标分支: ${branch}`);
+        Logger.info(`用户: ${username}`);
+
+        const isMergeBranch = currentBranch.includes(`-to-${branch}-`);
+
+        await this.processPush(branch, username, currentBranch, isMergeBranch);
+      }, "push操作");
     } catch (error) {
-      spinner.fail(`推送失败`);
-      throw error;
-    }
-
-    // 创建 pr
-
-    try {
-      spinner.start(`正在创建 PR ...`);
-      await this.createPullRequest(newBranch, branch);
-      spinner.succeed(`PR 创建成功 `);
-
-      execSync(`git checkout ${currentBranch}`);
-    } catch (error) {
-      spinner.fail(`PR 创建失败 ❌`);
-      console.error(error);
+      if (error instanceof ZhgitError) {
+        ErrorHandler.displayError(error);
+      } else {
+        const zhgitError = ErrorHandler.handle(error, "push操作");
+        ErrorHandler.displayError(zhgitError);
+      }
+      process.exit(1);
     }
   }
 
-  async createPullRequest(sourceBranch, targetBranch) {
-    try {
-      // 从配置文件获取 token
-      const token = process.env.GITHUB_TOKEN; // 或从配置文件读取
+  /**
+   * 处理推送逻辑
+   */
+  async processPush(branch, username, currentBranch, isMergeBranch) {
+    let newBranch = currentBranch;
+
+    if (!isMergeBranch) {
+      // 生成新分支名
+      spinner.start(`生成新分支名...`);
+      const timestamp = dayjs().format("YYYYMMDDHHmmss");
+      newBranch = GitUtils.generateSafeBranchName(
+        `${username}-push-${currentBranch}-to-${branch}`,
+        timestamp
+      );
+
+      // 检查分支名冲突
+      if (GitUtils.branchExists(newBranch)) {
+        throw new ZhgitError(
+          `分支 ${newBranch} 已存在，请稍后重试`,
+          ERROR_CODES.GIT_BRANCH_EXISTS
+        );
+      }
+      spinner.succeed(`新分支名: ${newBranch}`);
+
+      // 创建并切换到新分支
+      await this.createAndSwitchBranch(newBranch);
+
+      // 拉取目标分支最新代码
+      await this.fetchTargetBranch(branch);
+
+      // 合并目标分支
+      await this.mergeTargetBranch(branch, newBranch);
+    }
+
+    // 推送分支
+    await this.pushBranch(newBranch);
+
+    // 创建 PR
+    await this.createPullRequest(newBranch, branch, currentBranch);
+
+    // 切换回原分支
+    await this.switchBackToOriginalBranch(currentBranch);
+  }
+
+  /**
+   * 创建并切换到新分支
+   */
+  async createAndSwitchBranch(branchName) {
+    return await safeExecute(async () => {
+      spinner.start(`创建并切换到新分支...`);
+      GitUtils.createAndCheckoutBranch(branchName);
+      spinner.succeed(`已切换到新分支: ${branchName}`);
+    }, "创建分支");
+  }
+
+  /**
+   * 拉取目标分支最新代码
+   */
+  async fetchTargetBranch(branch) {
+    const retryFetch = withRetry(
+      3,
+      2000,
+      shouldRetryNetworkError
+    )(async () => {
+      return await safeExecute(async () => {
+        spinner.start(`正在拉取 ${branch} 分支最新代码...`);
+        GitUtils.fetchBranch(branch);
+        spinner.succeed("拉取成功");
+      }, "拉取远程分支");
+    });
+    return await retryFetch.call(this);
+  }
+
+  /**
+   * 合并目标分支
+   */
+  async mergeTargetBranch(branch, newBranch) {
+    return await safeExecute(async () => {
+      spinner.start(`正在合并 ${branch} 代码...`);
+      GitUtils.mergeBranch(`origin/${branch}`);
+      spinner.succeed(`合并成功`);
+    }, "合并分支").catch((error) => {
+      spinner.fail(`合并失败`);
+
+      if (error.code === ERROR_CODES.GIT_MERGE_CONFLICT) {
+        Logger.info("🔧 合并冲突解决指南:");
+        Logger.info("1. 手动解决冲突文件中的冲突标记");
+        Logger.info("2. git add .");
+        Logger.info('3. git commit -m "resolve conflicts"');
+        Logger.info(`4. zhgit push ${branch} (重新执行推送)`);
+        process.exit(1);
+      }
+
+      throw error;
+    });
+  }
+
+  /**
+   * 推送分支到远程
+   */
+  async pushBranch(branchName) {
+    const retryPush = withRetry(
+      3,
+      2000,
+      shouldRetryNetworkError
+    )(async () => {
+      return await safeExecute(async () => {
+        spinner.start(`正在推送到 GitHub...`);
+        GitUtils.pushBranch(branchName, true);
+        spinner.succeed(`推送完成`);
+      }, "推送分支");
+    });
+    return await retryPush.call(this);
+  }
+
+  /**
+   * 切换回原分支
+   */
+  async switchBackToOriginalBranch(originalBranch) {
+    return await safeExecute(async () => {
+      spinner.start(`切换回原分支...`);
+      GitUtils.checkoutBranch(originalBranch);
+      spinner.succeed(`已切换回: ${originalBranch}`);
+    }, "切换分支");
+  }
+
+  /**
+   * 创建 Pull Request，包含智能提交分析
+   */
+  async createPullRequest(sourceBranch, targetBranch, originalBranch) {
+    return await safeExecute(async () => {
+      spinner.start(`正在创建 PR...`);
 
       // 获取仓库信息
-      const remoteUrl = execSync("git remote get-url origin").toString().trim();
-      const [owner, repo] = remoteUrl
-        .replace("git@github.com:", "")
-        .replace(".git", "")
-        .split("/");
+      const { owner, repo } = GitUtils.parseRemoteUrl();
 
-      // 获取提交差异
-      const compareResult = await this.octokit.repos.compareCommits({
-        owner,
-        repo,
-        base: `${targetBranch}`,
-        head: sourceBranch,
-      });
+      // 分析提交历史
+      const commitAnalysis = await CommitAnalyzer.analyzeCommits(
+        sourceBranch,
+        targetBranch,
+        originalBranch
+      );
 
-      // 生成提交信息摘要
-      const commits = compareResult.data.commits;
-      let prBody = "## Commits\n\n";
-      commits.forEach((commit) => {
-        prBody += `- ${commit.commit.message}\n`;
-      });
+      // 生成 PR 描述
+      const prBody = CommitAnalyzer.generatePRDescription(
+        commitAnalysis,
+        sourceBranch,
+        targetBranch
+      );
+
+      // 生成 PR 标题
+      const prTitle = this.generatePRTitle(
+        sourceBranch,
+        targetBranch,
+        commitAnalysis
+      );
 
       // 创建 PR
-      const {
-        data: pullRequest,
-        status,
-        message,
-      } = await this.octokit.pulls.create({
+      const { data: pullRequest } = await this.octokit.pulls.create({
         owner,
         repo,
-        title: `Merge ${sourceBranch} into ${targetBranch}`,
+        title: prTitle,
         body: prBody,
         head: sourceBranch,
         base: targetBranch,
       });
 
-      if (![200, 201].includes(status)) {
-        throw new Error(`创建 pr 失败: ${status} ${message}`);
-      }
+      spinner.succeed(`PR 创建成功`);
+      Logger.success(`\n🎉 PR 创建成功!`);
+      Logger.success(`📋 标题: ${prTitle}`);
+      Logger.success(`🔗 链接: ${pullRequest.html_url}`);
+      Logger.success(`📊 ${commitAnalysis.summary}`);
 
-      Logger.success(`\n✅ PR 创建成功: ${pullRequest.html_url}`);
-    } catch (error) {
-      Logger.error("Failed to create PR:", error.message);
+      return pullRequest;
+    }, "创建PR");
+  }
+
+  /**
+   * 生成 PR 标题
+   */
+  generatePRTitle(sourceBranch, targetBranch, commitAnalysis) {
+    const { currentCommits, previousCommits } = commitAnalysis;
+
+    // 如果只有当前提交，使用第一个提交的消息作为标题
+    if (currentCommits.length > 0 && previousCommits.length === 0) {
+      const firstCommit = currentCommits[0];
+      return `${firstCommit.message} → ${targetBranch}`;
     }
+
+    // 如果有多个提交，使用通用格式
+    const totalCommits = currentCommits.length + previousCommits.length;
+    return `合并 ${sourceBranch} 到 ${targetBranch} (${totalCommits} 个提交)`;
   }
 }
 
